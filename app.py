@@ -24,7 +24,7 @@ creds = Credentials.from_service_account_info(
 client = gspread.authorize(creds)
 
 # Replace with your sheet name
-SHEET_NAME = "Student Transition Responses"
+SHEET_NAME = "Student Transition Data"
 spreadsheet = client.open(SHEET_NAME)
 worksheet = spreadsheet.sheet1
 
@@ -150,3 +150,4 @@ if submitted:
         st.markdown(href, unsafe_allow_html=True)
 
     st.success("✅ Form submitted! Data saved to Google Sheets and PDF generated.")
+
