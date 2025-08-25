@@ -1,5 +1,6 @@
 import streamlit as st
 import gspread
+import json
 from google.oauth2.service_account import Credentials
 from fpdf import FPDF
 import base64
@@ -15,11 +16,10 @@ st.title("📘 Student Transition Planning Summary")
 # -----------------------------
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-# Load credentials securely from Streamlit Secrets
-creds = Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"], scopes=SCOPES
-)
-client = gspread.authorize(creds)
+# ✅ FIX: Use st.secrets safely
+creds_dict = st.secrets["gcp_service_account"]  # <<< FIX HERE
+credentials = Credentials.from_service_account_info(dict(creds_dict), scopes=SCOPES)  # <<< FIX HERE
+client = gspread.authorize(credentials)
 
 # Replace with your sheet name
 SHEET_NAME = "Student Transition Responses"
@@ -149,4 +149,3 @@ if submitted:
         st.markdown(href, unsafe_allow_html=True)
 
     st.success("✅ Form submitted! Data saved to Google Sheets and PDF generated.")
-
