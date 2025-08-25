@@ -18,7 +18,10 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # ✅ FIX: Use st.secrets safely
 creds_dict = st.secrets["gcp_service_account"]  # <<< FIX HERE
-credentials = Credentials.from_service_account_info(dict(creds_dict), scopes=SCOPES)  # <<< FIX HERE
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"], scopes=SCOPES
+)
+  # <<< FIX HERE
 client = gspread.authorize(credentials)
 
 # Replace with your sheet name
@@ -52,6 +55,7 @@ with st.form("transition_form"):
     work_position = st.radio("Work Position", ["Standing", "Sitting"])
     work_environment = st.radio("Work Environment", ["Inside", "Outside"])
     noise_pref = st.radio("Noise Preference", ["Quiet", "Noisy"])
+
     cleanliness_pref = st.radio("Cleanliness Preference", ["Clean", "Dirty"])
 
     st.subheader("Career Interests")
