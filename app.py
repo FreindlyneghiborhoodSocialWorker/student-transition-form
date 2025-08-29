@@ -15,7 +15,7 @@ st.title("📘 Student Transition Planning Summary")
 # -----------------------------
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-# ✅ FIXED: use secrets, not file
+# Use service account info directly from Streamlit secrets
 creds = Credentials.from_service_account_info(
     st.secrets["gcp_service_account"], scopes=SCOPES
 )
@@ -23,9 +23,9 @@ creds = Credentials.from_service_account_info(
 # Authorize gspread client
 client = gspread.authorize(creds)
 
-# Replace with your sheet name
-SHEET_NAME = "Student Transition Data"
-spreadsheet = client.open(SHEET_NAME)
+# ✅ Use Spreadsheet ID instead of name
+SPREADSHEET_ID = "1PZxxAwAE_HOdGl2Ao8EyuzSJDBHn1dCIcLrIrLR5F00"
+spreadsheet = client.open_by_key(SPREADSHEET_ID)
 worksheet = spreadsheet.sheet1
 
 # -----------------------------
@@ -150,4 +150,6 @@ if submitted:
         st.markdown(href, unsafe_allow_html=True)
 
     st.success("✅ Form submitted! Data saved to Google Sheets and PDF generated.")
+
+
 
